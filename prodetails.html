@@ -39,7 +39,6 @@
     <style type="text/css">
         .ar-button {
           position: absolute;
-          margin-bottom: 200px;
           bottom: 0;
           right: 100px;
           height: 30px;
@@ -60,14 +59,19 @@
       
         #plattar-frame.visible{
               display: block;
+              width: 50%;
+            height: 70%;
+        }
+        .small-img{
+            position: absolute;
+            z-index: 999;
         }
       
         #viewinar{
           display: none;
           position: absolute;
           z-index: 11;
-          top: 150px;
-          bottom: 90px;
+          top: 185px;
           left: 200px;
           right: 780px;
           background: white;
@@ -76,29 +80,77 @@
         #viewinar.visible{
               display: block;
         }
+        .small-img.visible{
+            display: block;
+            position: absolute;
+            z-index: 999;
+        }
+        /****** 3d and ar buttons **********/
+        #button3D{
+            right: 130px;
+            opacity: 1;
+            bottom: 75px;
+        }
+        #buttonAR{
+            right: 0px;
+            opacity: 1;
+            bottom: 40px;
+        }
+        #qrimage{
+            width: 200px;
+            max-height: 200px;
+        }
+        .hide{
+            display: none;
+            z-index: 0;
+        }
+        @media only screen and (max-width: 768px){
+            #button3D,
+            #buttonAR{
+                position: absolute;
+                bottom: 190px;
+                left: 30px;
+            }
+            #buttonAR{
+                bottom: 155px;
+            }
+            #plattar-frame.visible{
+                width: 100%;
+                height: 65%;
+            }
+            #viewinar{
+                top: 182px;
+                right: 90px;
+                left: 85px;
+            }
+            #qrimage{
+                width: 50px;
+                max-height: 50px;
+            }
+        }
       </style>
-      <iframe id="plattar-frame" width="50%" height="87%" frameBorder="0" allow="camera; vr; autoplay" allowfullscreen></iframe>
-      <img onclick="startAR();" src="images/home.png" id="buttonAR" class="ar-button" style="opacity: 1;width: 80px; bottom: -70px;">
-      <img onclick="start360();" src="images/360.png" id="button3D" class="ar-button" style="opacity: 1;width: 50px; bottom: -35px;">
+      <iframe id="plattar-frame" frameBorder="0" allow="camera; vr; autoplay" allowfullscreen></iframe>
+      <img onclick="startAR();" src="images/home.png" id="buttonAR" class="ar-button">
+      <img onclick="start360();" src="images/360.png" id="button3D" class="ar-button">
       <div id="viewinar">
           <h2 style="margin-top: 20px;">View at Home</h2>
           <p>Open the camera app on your<br/>phone and scan this code</p>
-          <img id="qrimage" src="images/gr.png" style="max-height: 200px; width: 200px;">
+          <img id="qrimage" src="images/gr.png">
           
       </div>
-   
+
   <script src="https://app.plattar.com/webgleditor/embed/plattar-1.0.0.js"></script>
   <script type="text/javascript">
       var integration = new PlattarIntegration();
-      integration.init("d9a36210-d1f8-11ea-bc87-094ee0b37927");
-      
+      integration.init("77d04a30-2332-11eb-8bd5-a5c46d6575b3");
+
       // integration.init("5fe63230-cfdd-11ea-bf8c-f7e3a6a3788d");
       if (integration.canAugment) {
        // show that AR is supported
         document.getElementById("buttonAR").classList.add("visible");
       } else {
        // show that a 3d view will appear
-  
+
         document.getElementById("button3D").classList.add("visible");
       }
   
@@ -108,10 +160,8 @@
         iframe.classList.add("visible");
   
           var fram = document.getElementById("viewinar");
-        fram.classList.remove("visible");
-        
+          fram.classList.remove("visible");
       }
-  
       function startAR() {
         if (integration.canAugment) {
           integration.startAugment(function(){
@@ -130,20 +180,12 @@
         iframe.classList.remove("visible");
       }
       function  stop1(){
-        var iframe = document.getElementById("plattar-frame");
-          var fram = document.getElementById("viewinar");
-      
-        var ProductImg=document.getElementById("ProductImg");
-    var SmallImg=document.getElementsByClassName("small-img");
-         if( SmallImg.onclick){
-        ProductImg.src= SmallImg[0].src;
-        iframe.hide();
-        fram.hide();
-         }else{
-            iframe.show();
-            fram.show();
-         }
-         
+          var fram1= document.getElementById("viewinar");
+          var fram2= document.getElementById("plattar-frame");
+          if (fram1.classList.contains("visible")|| fram2.classList.contains("visible")){
+              fram1.classList.add("hide");
+              fram2.classList.add("hide");
+          }
       }
   </script>
             <div class="small-img-row">

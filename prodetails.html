@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,18 +35,129 @@
     <div class="row">
         <div class="col-2">
             <img src="images/gallery-1.jpg" width="100%" id="ProductImg">
+            
+    <style type="text/css">
+        .ar-button {
+          position: absolute;
+          margin-bottom: 200px;
+          bottom: 0;
+          right: 100px;
+          height: 30px;
+          opacity: 0.75;
+        }
+      
+        #plattar-frame{
+          display: none;
+          position: absolute;
+          z-index: 11;
+          margin-right: 10px;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: white;
+        }
+      
+        #plattar-frame.visible{
+              display: block;
+        }
+      
+        #viewinar{
+          display: none;
+          position: absolute;
+          z-index: 11;
+          top: 150px;
+          bottom: 90px;
+          left: 200px;
+          right: 780px;
+          background: white;
+          text-align: center;
+        }
+        #viewinar.visible{
+              display: block;
+        }
+      </style>
+      <iframe id="plattar-frame" width="50%" height="87%" frameBorder="0" allow="camera; vr; autoplay" allowfullscreen></iframe>
+      <img onclick="startAR();" src="images/home.png" id="buttonAR" class="ar-button" style="opacity: 1;width: 80px; bottom: -70px;">
+      <img onclick="start360();" src="images/360.png" id="button3D" class="ar-button" style="opacity: 1;width: 50px; bottom: -35px;">
+      <div id="viewinar">
+          <h2 style="margin-top: 20px;">View at Home</h2>
+          <p>Open the camera app on your<br/>phone and scan this code</p>
+          <img id="qrimage" src="images/gr.png" style="max-height: 200px; width: 200px;">
+          
+      </div>
+   
+  <script src="https://app.plattar.com/webgleditor/embed/plattar-1.0.0.js"></script>
+  <script type="text/javascript">
+      var integration = new PlattarIntegration();
+      integration.init("d9a36210-d1f8-11ea-bc87-094ee0b37927");
+      
+      // integration.init("5fe63230-cfdd-11ea-bf8c-f7e3a6a3788d");
+      if (integration.canAugment) {
+       // show that AR is supported
+        document.getElementById("buttonAR").classList.add("visible");
+      } else {
+       // show that a 3d view will appear
+  
+        document.getElementById("button3D").classList.add("visible");
+      }
+  
+      function start360() {
+          var iframe = document.getElementById("plattar-frame");
+        iframe.src = integration.embedUrl;
+        iframe.classList.add("visible");
+  
+          var fram = document.getElementById("viewinar");
+        fram.classList.remove("visible");
+        
+      }
+  
+      function startAR() {
+        if (integration.canAugment) {
+          integration.startAugment(function(){
+            var qr = integration.qrUrl;
+            document.getElementById("qrimage").src = qr;
+                  var fram = document.getElementById("viewinar");
+                fram.classList.add("visible");
+          });
+        } else {
+        var qr = integration.qrUrl;
+          document.getElementById("qrimage").src = qr;
+          var fram = document.getElementById("viewinar");
+              fram.classList.add("visible");
+        }
+          var iframe = document.getElementById("plattar-frame");
+        iframe.classList.remove("visible");
+      }
+      function  stop1(){
+        var iframe = document.getElementById("plattar-frame");
+          var fram = document.getElementById("viewinar");
+      
+        var ProductImg=document.getElementById("ProductImg");
+    var SmallImg=document.getElementsByClassName("small-img");
+         if( SmallImg.onclick){
+        ProductImg.src= SmallImg[0].src;
+        iframe.hide();
+        fram.hide();
+         }else{
+            iframe.show();
+            fram.show();
+         }
+         
+      }
+  </script>
             <div class="small-img-row">
                 <div class="small-img-col">
-                   <img src="images/gallery-1.jpg" width="100%" class="small-img">
+                   <img src="images/gallery-1.jpg" width="100%" onclick="stop1();" class="small-img">
                 </div>
                 <div class="small-img-col">
-                    <img src="images/gallery-2.jpg" width="100%" class="small-img">
+                    <img src="images/gallery-2.jpg" width="100%" onclick="stop1();"class="small-img">
                  </div>
                   <div class="small-img-col">
-                    <img src="images/gallery-3.jpg" width="100%" class="small-img">
+                    <img src="images/gallery-3.jpg" width="100%"onclick="stop1();" class="small-img">
                  </div> 
                  <div class="small-img-col">
-                    <img src="images/gallery-4.jpg" width="100%" class="small-img">
+                    <img src="images/gallery-4.jpg" width="100%" onclick="stop1();"class="small-img">
                  </div>
             </div>
         </div>
@@ -66,7 +177,7 @@
             <a href="cart.html" class="btn">Add to cart</a>
             <h3>Product details <i class="fa fa-indent"></i></h3>
             <br>
-            <p>Success isn't always about greatness. it's about
+            <p>Success isn"t always about greatness. it"s about
                 consistency. Consistent<br> hard work gain success. Greatness 
                 will come. </p>
         </div>
